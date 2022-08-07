@@ -1,9 +1,11 @@
 #include "list.h"
 
+int list_size_g = 0;
 
 // call malloc and return the pointer. in case of memory allocation failure return NULL;
 listPtr_s init_list()
 {
+
     listPtr_s tmp = (listPtr_s)malloc(sizeof(list_s));
     if (tmp == NULL)
     {
@@ -17,12 +19,12 @@ int add(listPtr_s *list, char msg_t[task_len], char status[status_len])
     int stat = 1;
     listPtr_s tmp;
 
-    if (list_size == 0)
+    if (list_size_g == 0)
     {
         *list = init_list();
         strncpy((*list)->task_t, msg_t, task_len);
         strncpy((*list)->status, status, status_len);
-        list_size++;
+        list_size_g++;
     }
     else
     {
@@ -39,7 +41,7 @@ int add(listPtr_s *list, char msg_t[task_len], char status[status_len])
             strncpy((tmp)->status, status, status_len);
             tmp->next_t = *list;
             *list = tmp;
-            list_size++;
+            list_size_g++;
         }
         printf("added second\n");
     }
@@ -50,7 +52,7 @@ int append(listPtr_s *list, char msg_t[task_len], char status[status_len])
 {
     int stat = 1;
     listPtr_s tmp;
-    if (list == NULL)
+    if (*list == NULL)
     {
         *list = init_list();
         if (*list == NULL)
@@ -62,11 +64,12 @@ int append(listPtr_s *list, char msg_t[task_len], char status[status_len])
         {
             strncpy((*list)->task_t, msg_t, task_len);
             strncpy((*list)->status, status, status_len);
-            list_size++;
+            list_size_g++;
         }
     }
     else
     {
+
         tmp = *list;
         while (tmp->next_t != NULL)
         {
@@ -82,7 +85,7 @@ int append(listPtr_s *list, char msg_t[task_len], char status[status_len])
         {
             strncpy((tmp->next_t)->task_t, msg_t, task_len);
             strncpy((tmp->next_t)->status, status, status_len);
-            list_size++;
+            list_size_g++;
         }
     }
     return stat;
@@ -96,7 +99,7 @@ int add_at(listPtr_s *list, char msg_t[task_len], char status[status_len], int i
     listPtr_s tmp;
     listPtr_s res;
     listPtr_s tmp1;
-    if (i < 0 || i > list_size)
+    if (i < 0 || i > list_size_g)
     {
         stat = 0;
     }
@@ -131,7 +134,7 @@ int add_at(listPtr_s *list, char msg_t[task_len], char status[status_len], int i
                 strncpy((tmp)->task_t, msg_t, task_len);
                 strncpy((tmp)->status, status, status_len);
                 tmp->next_t = tmp1;
-                list_size++;
+                list_size_g++;
             }
         }
     }
@@ -146,7 +149,7 @@ void remove_first(listPtr_s *list)
         res = (*list);
         *list = (*list)->next_t;
         free(res);
-        list_size--;
+        list_size_g--;
     }
 }
 // remove a node from the end of the list
@@ -171,7 +174,7 @@ void remove_last(listPtr_s *list)
                     res = tmp->next_t;
                     tmp->next_t = NULL;
                     free(res);
-                    list_size--;
+                    list_size_g--;
                     break;
                 }
                 tmp = tmp->next_t;
@@ -187,7 +190,7 @@ int remove_at(listPtr_s *list, int i)
     listPtr_s res = NULL;
     int counter = 0;
     int stat = 1;
-    if (i < 0 || i > list_size)
+    if (i < 0 || i > list_size_g)
     {
         stat = 0;
     }
@@ -204,14 +207,14 @@ int remove_at(listPtr_s *list, int i)
             res = *list;
             *list = (*list)->next_t;
             free(res);
-            list_size--;
+            list_size_g--;
         }
         else if (counter = i - 1)
         {
             res = tmp->next_t;
             tmp->next_t = tmp->next_t->next_t;
             free(res);
-            list_size--;
+            list_size_g--;
         }
     }
     return stat;
@@ -248,29 +251,18 @@ void print_list(listPtr_s t, int n)
         tmp = tmp->next_t;
     }
 }
-/* get the list size
-int list_size(listPtr_s t)
-{
-    int counter = 0;
-    while (t)
-    {
-        counter++;
-        t = t->next_t;
-    }
-    return counter;
-}
-*/
 
 // get a specified node by index
 list_s get_node(listPtr_s list, int i)
 {
     listPtr_s tmp;
     int counter;
-    if (i > 0 && i < list_size)
+    if (i > 0 && i < list_size_g)
     {
         for (tmp = list, counter = 0;
              tmp != NULL && counter != i;
-             tmp = tmp->next_t, counter++);
+             tmp = tmp->next_t, counter++)
+            ;
     }
 
     return *tmp;
@@ -281,7 +273,7 @@ void free_list(listPtr_s t)
 {
     listPtr_s tmp1 = t;
     listPtr_s tmp2;
-    list_size = 0;
+    list_size_g = 0;
     while (tmp1)
     {
         tmp2 = tmp1;

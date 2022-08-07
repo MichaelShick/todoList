@@ -8,6 +8,9 @@
 #define task_len 128
 //max status size;
 #define status_len 64
+
+extern int list_size_g;
+
 typedef struct node
 {
     char task_t[task_len];
@@ -15,7 +18,6 @@ typedef struct node
     struct node *next_t;
 } list_s, *listPtr_s;
 // call malloc and return the pointer. in case of memory allocation failure return NULL;
-int list_size = 0;
 listPtr_s init_list();
 
 // all the add functions return 1 on success, 0 on failure;
@@ -40,9 +42,9 @@ int has_node(listPtr_s list, listPtr_s t);
 void print_list(listPtr_s t,int n);
 
 //get a specified node by index 
-list_s get_node(listPtr_s *list,int i);
+list_s get_node(listPtr_s list,int i);
 
-//replace parts of a specified task
+//replace parts of a s+pecified task
 
 
 // free all the nodes in the list
