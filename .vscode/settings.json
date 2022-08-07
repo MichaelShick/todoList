@@ -29,6 +29,11 @@
     "**/.vscode/**"
   ],
   "files.associations": {
-    "list.h": "c"
+    "list.h": "c",
+    "cstdio": "c",
+    "type_traits": "c",
+    "stdlib.h": "c",
+    "stddef.h": "c",
+    "inputer.h": "c"
   }
 }
