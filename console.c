@@ -1,9 +1,6 @@
 #include "console.h"
 
-// functions to controll tasks using list.h
-// all the functions are for printing and therefor don't return anything
 
-// print a main menu - displaying all the options available for the user
 void display_options()
 {
     system("clear");
@@ -47,25 +44,21 @@ void display_options()
          "3. Remove tasks\n"
          "4. Edit tasks\n");
 }
-// display all the tasks in the list
-// listptr_s list - the list to print from
+
 void display_list(listPtr_s list)
 {
-    if (list_size_g == 0)
+    if (get_list_size(list) == 0)
     {
         puts("there are no tasks\n");
     }
     else
     {
         system("clear");
-        print_list(list, list_size_g);
+        print_list(list, get_list_size(list));
     }
     sleep(5);
 }
 
-// add task to the list - fill the task_t field with task_name and status with "pending"
-// listptr_s *list -  a pointer to the list
-// char *task_name - the task name to fill in.
 
 void add_task(listPtr_s *list, char *task_name)
 {
@@ -77,10 +70,7 @@ void add_task(listPtr_s *list, char *task_name)
         exit(1);
     }
 }
-// edit task content - remove the task wit hindex task_num and add it again with task_t replaced by task_name keeping the status the same
-// listptr_s *list -  a pointer to the list
-// char task_num - the task index
-// char *task_name - the task name to fill in.
+
 void edit_task_content(listPtr_s *list, int task_num, char *task_name)
 {
     list_s tmp = get_node(*list, task_num);

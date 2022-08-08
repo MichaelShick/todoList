@@ -5,16 +5,14 @@
 #include <unistd.h>
 
 // max task size
-#define str_len 128
-// max status size;
+#define STR_LEN 128
 
-extern int list_size_g;
 
 // the linked list struct, containing two string fields
 typedef struct node
 {
-    char task_t[str_len];
-    char status[str_len];
+    char task_t[STR_LEN];
+    char status[STR_LEN];
     struct node *next_t;
 } list_s, *listPtr_s;
 // call malloc and return the pointer. in case of memory allocation failure return NULL;
@@ -27,13 +25,13 @@ listPtr_s init_list();
     // return 1 on success, 0 on failure;
 
 // add a node to the beginning of the list
-int add(listPtr_s *list_s, char msg_t[str_len], char status[str_len]);
+int add(listPtr_s *list_s, char msg_t[STR_LEN], char status[STR_LEN]);
 
 // add a node to the end of the list
-int append(listPtr_s *list_s, char msg_t[str_len], char status[str_len]);
+int append(listPtr_s *list_s, char msg_t[STR_LEN], char status[STR_LEN]);
 // add a node to the specified index
 // int i    - the index of where to add the node at
-int add_at(listPtr_s *list_s, char msg_t[str_len], char status[str_len], int i);
+int add_at(listPtr_s *list_s, char msg_t[STR_LEN], char status[STR_LEN], int i);
 
 // for all the remove functions:
     // listPtr_s* list_s - a pointer to the list to remove the node from
@@ -63,6 +61,10 @@ void print_list(listPtr_s t, int n);
 // returns the node located at index i
 list_s get_node(listPtr_s list, int i);
 
+// get the list node count
+// listptr_s list   - the list to look in
+// returnus the amount of nodes in the list
+int get_list_size(listPtr_s list);
 
 // free all the nodes in the list t
 // listptr_s t  - the list to free

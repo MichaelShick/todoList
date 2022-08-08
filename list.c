@@ -1,6 +1,5 @@
 #include "list.h"
 
-int list_size_g = 0;
 
 // call malloc and return the pointer. in case of memory allocation failure return NULL;
 listPtr_s init_list()
@@ -14,17 +13,16 @@ listPtr_s init_list()
     return tmp;
 }
 // add a node to the beginning of the list
-int add(listPtr_s *list, char msg_t[str_len], char status[str_len])
+int add(listPtr_s *list, char msg_t[STR_LEN], char status[STR_LEN])
 {
     int stat = 1;
     listPtr_s tmp;
 
-    if (list_size_g == 0)
+    if (get_list_size(*list))
     {
         *list = init_list();
-        strncpy((*list)->task_t, msg_t, str_len);
-        strncpy((*list)->status, status, str_len);
-        list_size_g++;
+        strncpy((*list)->task_t, msg_t, STR_LEN);
+        strncpy((*list)->status, status, STR_LEN);
     }
     else
     {
@@ -37,18 +35,17 @@ int add(listPtr_s *list, char msg_t[str_len], char status[str_len])
         }
         else
         {
-            strncpy((tmp)->task_t, msg_t, str_len);
-            strncpy((tmp)->status, status, str_len);
+            strncpy((tmp)->task_t, msg_t, STR_LEN);
+            strncpy((tmp)->status, status, STR_LEN);
             tmp->next_t = *list;
             *list = tmp;
-            list_size_g++;
         }
         printf("added second\n");
     }
     return stat;
 }
 // add a node to the end of the list
-int append(listPtr_s *list, char msg_t[str_len], char status[str_len])
+int append(listPtr_s *list, char msg_t[STR_LEN], char status[STR_LEN])
 {
     int stat = 1;
     listPtr_s tmp;
@@ -62,9 +59,8 @@ int append(listPtr_s *list, char msg_t[str_len], char status[str_len])
         }
         else
         {
-            strncpy((*list)->task_t, msg_t, str_len);
-            strncpy((*list)->status, status, str_len);
-            list_size_g++;
+            strncpy((*list)->task_t, msg_t, STR_LEN);
+            strncpy((*list)->status, status, STR_LEN);
         }
     }
     else
@@ -83,23 +79,23 @@ int append(listPtr_s *list, char msg_t[str_len], char status[str_len])
         }
         else
         {
-            strncpy((tmp->next_t)->task_t, msg_t, str_len);
-            strncpy((tmp->next_t)->status, status, str_len);
-            list_size_g++;
+            strncpy((tmp->next_t)->task_t, msg_t, STR_LEN);
+            strncpy((tmp->next_t)->status, status, STR_LEN);
+
         }
     }
     return stat;
 }
 // add a node after the specified index.
 // in case of error or if the index is illegal return 0, otherwise return 1
-int add_at(listPtr_s *list, char msg_t[str_len], char status[str_len], int i)
+int add_at(listPtr_s *list, char msg_t[STR_LEN], char status[STR_LEN], int i)
 {
     int stat = 1;
     int counter = 0;
     listPtr_s tmp;
     listPtr_s res;
     listPtr_s tmp1;
-    if (i < 0 || i > list_size_g)
+    if (i < 0 || i > get_list_size(*list))
     {
         stat = 0;
     }
@@ -131,10 +127,9 @@ int add_at(listPtr_s *list, char msg_t[str_len], char status[str_len], int i)
             else
             {
                 tmp = tmp->next_t;
-                strncpy((tmp)->task_t, msg_t, str_len);
-                strncpy((tmp)->status, status, str_len);
+                strncpy((tmp)->task_t, msg_t, STR_LEN);
+                strncpy((tmp)->status, status, STR_LEN);
                 tmp->next_t = tmp1;
-                list_size_g++;
             }
         }
     }
@@ -149,7 +144,7 @@ void remove_first(listPtr_s *list)
         res = (*list);
         *list = (*list)->next_t;
         free(res);
-        list_size_g--;
+
     }
 }
 // remove a node from the end of the list
@@ -174,7 +169,6 @@ void remove_last(listPtr_s *list)
                     res = tmp->next_t;
                     tmp->next_t = NULL;
                     free(res);
-                    list_size_g--;
                     break;
                 }
                 tmp = tmp->next_t;
@@ -190,7 +184,7 @@ int remove_at(listPtr_s *list, int i)
     listPtr_s res = NULL;
     int counter = 0;
     int stat = 1;
-    if (i < 0 || i > list_size_g)
+    if (i < 0 || i > get_list_size(*list))
     {
         stat = 0;
     }
@@ -207,14 +201,14 @@ int remove_at(listPtr_s *list, int i)
             res = *list;
             *list = (*list)->next_t;
             free(res);
-            list_size_g--;
+
         }
         else if (counter = i - 1)
         {
             res = tmp->next_t;
             tmp->next_t = tmp->next_t->next_t;
             free(res);
-            list_size_g--;
+
         }
     }
     return stat;
@@ -257,15 +251,25 @@ list_s get_node(listPtr_s list, int i)
 {
     listPtr_s tmp;
     int counter;
-    if (i > 0 && i < list_size_g)
+    if (i > 0 && i < get_list_size(list))
     {
         for (tmp = list, counter = 0;
              tmp != NULL && counter != i;
-             tmp = tmp->next_t, counter++)
-            ;
+             tmp = tmp->next_t, counter++);
     }
 
     return *tmp;
+}
+
+int get_list_size(listPtr_s list)
+{
+    int counter = 0;
+    listPtr_s tmp = list;
+    while(tmp)
+    {
+        tmp = tmp->next_t;
+        counter++;
+    }
 }
 
 // free all the nodes in the list
@@ -274,7 +278,6 @@ void free_list(listPtr_s t)
     listPtr_s tmp1 = t;
     listPtr_s tmp2;
     printf("freeing\n");
-    list_size_g = 0;
     while (tmp1)
     {
         tmp2 = tmp1;

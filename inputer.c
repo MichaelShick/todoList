@@ -3,14 +3,14 @@ int main()
 {
     listPtr_s list;
     int input = 1;
-    char string_input[str_len];
+    char string_input[STR_LEN];
     display_options();
 
     while (input)
     {
         display_options();
 
-        fgets(string_input, str_len, stdin);
+        fgets(string_input, STR_LEN, stdin);
         input = atoi(string_input);
         switch (input)
         {
@@ -21,13 +21,13 @@ int main()
 
             system("clear");
             puts("describe the task\n");
-            fgets(string_input, str_len, stdin);
+            fgets(string_input, STR_LEN, stdin);
 
             add_task(&list, string_input);
 
             break;
         case REMOVE_TASKS:
-            if (list_size_g == 0)
+            if (get_list_size(list) == 0)
             {
                 puts("the list is empty\n");
             }
@@ -36,10 +36,10 @@ int main()
                 system("clear");
                 display_list(list);
                 puts("please choose a task or press escape to exit\n");
-                fgets(string_input, str_len, stdin);
+                fgets(string_input, STR_LEN, stdin);
 
                 input = atoi(string_input);
-                if (input <= 0 || input > list_size_g)
+                if (input <= 0 || input > get_list_size(list))
                 {
                     puts("invalid index -_- \n");
                     break;
@@ -48,7 +48,7 @@ int main()
             }
             break;
         case EDIT_TASKS:
-            if (list_size_g == 0)
+            if (get_list_size(list) == 0)
             {
                 puts("the list is empty\n");
             }
@@ -58,7 +58,7 @@ int main()
                 printf("would you like to edit the task or the status?\n"
                        "1. Task\n"
                        "2. Status\n");
-                fgets(string_input, str_len, stdin);
+                fgets(string_input, STR_LEN, stdin);
 
                 input = atoi(string_input);
                 if (input == 1)
@@ -66,16 +66,16 @@ int main()
                     system("clear");
                     display_list(list);
                     puts("choose a task to edit\n");
-                    fgets(string_input, str_len, stdin);
+                    fgets(string_input, STR_LEN, stdin);
 
                     input = atoi(string_input);
-                    if (input <= 0 || input > list_size_g)
+                    if (input <= 0 || input > get_list_size(list))
                     {
                         puts("invalid index -_- \n");
                         break;
                     }
                     puts("please type in the task\n");
-                    fgets(string_input, str_len, stdin);
+                    fgets(string_input, STR_LEN, stdin);
 
                     edit_task_content(&list, input - 1, string_input);
                 }
@@ -85,16 +85,16 @@ int main()
                     system("clear");
                     display_list(list);
                     puts("choose a task to edit\n");
-                    fgets(string_input, str_len, stdin);
+                    fgets(string_input, STR_LEN, stdin);
 
                     input = atoi(string_input);
-                    if (input <= 0 || input > list_size_g)
+                    if (input <= 0 || input > get_list_size(list))
                     {
                         puts("invalid index -_- \n");
                         break;
                     }
                     puts("please type in the status\n");
-                    fgets(string_input, str_len, stdin);
+                    fgets(string_input, STR_LEN, stdin);
 
                     edit_task_status(&list, input - 1, string_input);
                 }
