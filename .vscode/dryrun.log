@@ -1,5 +1,5 @@
 make --dry-run --keep-going --print-directory
 make: Entering directory '/home/michael/todoList'
-gcc -o output inputer.c list.c
+gcc -o output inputer.c list.c console.c
 make: Leaving directory '/home/michael/todoList'
  
