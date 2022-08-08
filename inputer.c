@@ -14,10 +14,10 @@ int main()
         input = atoi(string_input);
         switch (input)
         {
-        case view_tasks:
+        case VIEW_TASKS:
             display_list(list);
             break;
-        case add_tasks:
+        case ADD_TASKS:
 
             system("clear");
             puts("describe the task\n");
@@ -26,7 +26,7 @@ int main()
             add_task(&list, string_input);
 
             break;
-        case remove_tasks:
+        case REMOVE_TASKS:
             if (list_size_g == 0)
             {
                 puts("the list is empty\n");
@@ -47,7 +47,7 @@ int main()
                 delete_task(&list, input - 1);
             }
             break;
-        case edit_tasks:
+        case EDIT_TASKS:
             if (list_size_g == 0)
             {
                 puts("the list is empty\n");
@@ -100,7 +100,7 @@ int main()
                 }
             }
             break;
-        case exit_sys:
+        case EXIT_SYS:
             puts("bye!");
             free_list(list);
             break;
