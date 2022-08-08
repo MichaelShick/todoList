@@ -14,7 +14,7 @@ listPtr_s init_list()
     return tmp;
 }
 // add a node to the beginning of the list
-int add(listPtr_s *list, char msg_t[task_len], char status[status_len])
+int add(listPtr_s *list, char msg_t[str_len], char status[str_len])
 {
     int stat = 1;
     listPtr_s tmp;
@@ -22,8 +22,8 @@ int add(listPtr_s *list, char msg_t[task_len], char status[status_len])
     if (list_size_g == 0)
     {
         *list = init_list();
-        strncpy((*list)->task_t, msg_t, task_len);
-        strncpy((*list)->status, status, status_len);
+        strncpy((*list)->task_t, msg_t, str_len);
+        strncpy((*list)->status, status, str_len);
         list_size_g++;
     }
     else
@@ -37,8 +37,8 @@ int add(listPtr_s *list, char msg_t[task_len], char status[status_len])
         }
         else
         {
-            strncpy((tmp)->task_t, msg_t, task_len);
-            strncpy((tmp)->status, status, status_len);
+            strncpy((tmp)->task_t, msg_t, str_len);
+            strncpy((tmp)->status, status, str_len);
             tmp->next_t = *list;
             *list = tmp;
             list_size_g++;
@@ -48,7 +48,7 @@ int add(listPtr_s *list, char msg_t[task_len], char status[status_len])
     return stat;
 }
 // add a node to the end of the list
-int append(listPtr_s *list, char msg_t[task_len], char status[status_len])
+int append(listPtr_s *list, char msg_t[str_len], char status[str_len])
 {
     int stat = 1;
     listPtr_s tmp;
@@ -62,8 +62,8 @@ int append(listPtr_s *list, char msg_t[task_len], char status[status_len])
         }
         else
         {
-            strncpy((*list)->task_t, msg_t, task_len);
-            strncpy((*list)->status, status, status_len);
+            strncpy((*list)->task_t, msg_t, str_len);
+            strncpy((*list)->status, status, str_len);
             list_size_g++;
         }
     }
@@ -83,8 +83,8 @@ int append(listPtr_s *list, char msg_t[task_len], char status[status_len])
         }
         else
         {
-            strncpy((tmp->next_t)->task_t, msg_t, task_len);
-            strncpy((tmp->next_t)->status, status, status_len);
+            strncpy((tmp->next_t)->task_t, msg_t, str_len);
+            strncpy((tmp->next_t)->status, status, str_len);
             list_size_g++;
         }
     }
@@ -92,7 +92,7 @@ int append(listPtr_s *list, char msg_t[task_len], char status[status_len])
 }
 // add a node after the specified index.
 // in case of error or if the index is illegal return 0, otherwise return 1
-int add_at(listPtr_s *list, char msg_t[task_len], char status[status_len], int i)
+int add_at(listPtr_s *list, char msg_t[str_len], char status[str_len], int i)
 {
     int stat = 1;
     int counter = 0;
@@ -131,8 +131,8 @@ int add_at(listPtr_s *list, char msg_t[task_len], char status[status_len], int i
             else
             {
                 tmp = tmp->next_t;
-                strncpy((tmp)->task_t, msg_t, task_len);
-                strncpy((tmp)->status, status, status_len);
+                strncpy((tmp)->task_t, msg_t, str_len);
+                strncpy((tmp)->status, status, str_len);
                 tmp->next_t = tmp1;
                 list_size_g++;
             }
@@ -273,6 +273,7 @@ void free_list(listPtr_s t)
 {
     listPtr_s tmp1 = t;
     listPtr_s tmp2;
+    printf("freeing\n");
     list_size_g = 0;
     while (tmp1)
     {

@@ -2,6 +2,12 @@
 
 #include <stdio.h>
 
+#define exit_sys 0
+#define view_tasks 1
+#define add_tasks 2
+#define remove_tasks 3
+#define edit_tasks 4
+
 // functions to controll tasks input and display with list.h
 void display_options();
 
